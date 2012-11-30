@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.Arrays;
+import java.util.Scanner;
 
 
 
@@ -119,7 +120,9 @@ public class app4
     }
     public static void main(String...args) throws FileNotFoundException, IOException
     {
-        merge("numbers.txt");
+        System.out.println("Please enter the textfile Location: ");
+        String in = new Scanner(System.in).nextLine();
+        merge(in);
         
     }
 }
