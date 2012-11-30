@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.Arrays;
 
@@ -8,6 +7,7 @@ public class app4
 {
     static int tracker;
     static int counter = 0;
+    static final int ARRAY_SIZE = 10;
     public static void intoChunks(String filename) throws FileNotFoundException, IOException
     {
        int i = 1;
@@ -15,22 +15,40 @@ public class app4
        BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(filename))));
        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("merge"+i+".txt", true)));
        String str;
-       
+       int j = 0;
+       int temp[] = new int[ARRAY_SIZE];
        while((str = br.readLine()) != null)
        {
-           pw.println(str);
-           if(i % 10 == 0)
+           //pw.println(str);
+           
+           if(i % ARRAY_SIZE == 0)
            {
+               temp[j] = Integer.parseInt(str);
+               Arrays.sort(temp);
+               for(int x = 0; x < ARRAY_SIZE; x++)
+               {
+                   pw.println(temp[x]);
+               }
                tracker++;
                pw.close();
                pw = new PrintWriter(new BufferedWriter(new FileWriter("merge"+tracker+".txt")));
+               j = 0;
+               i++;
            }
+           else{
+           temp[j] = Integer.parseInt(str);
+           j++;
            i++;
+           }
+       }
+       Arrays.sort(temp);
+       for(int y = 0; y < j; y++)
+       {
+           pw.println(temp[y]);
        }
        
-       
        pw.close();
-        if((i - 1) % 10 == 0)
+        if((i - 1) % ARRAY_SIZE == 0)
        {
            File file = new File("merge"+tracker+".txt");
            file.delete();
@@ -43,34 +61,6 @@ public class app4
             tracker++;
         }
         br.close();
-    }
-    public static void sortChunks(String filename) throws FileNotFoundException, IOException
-    {
-        intoChunks(filename);
-        for(int i = 1; i <= tracker; i++)
-        {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream("merge"+i+".txt"))));
-            
-            String str;
-            int[] temp = new int[10];
-            int j = 0;
-            for(int h = 0; h < 10; h++)
-            {
-                str = br.readLine();
-                if(str != null)temp[j] = Integer.parseInt(str);
-                j++;
-            }
-            //System.out.println(Arrays.toString(temp) + "merge"+i+".txt");System.exit(0);
-            Arrays.sort(temp);
-            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("merge"+i+".txt")));
-            for(int k = 0; k < j; k++)
-            {
-                if(temp[k] != 0)pw.println(temp[k]);
-            }
-            pw.close();
-            br.close();
-        }
-        
     }
      public static void mix(String File1, String File2, String out) throws FileNotFoundException, IOException
     {
@@ -107,7 +97,7 @@ public class app4
     }
     public static void merge(String File) throws FileNotFoundException, IOException
     {
-        sortChunks(File);
+        intoChunks(File);
         tracker++;
         for(int i = 1; i < tracker; i+=2)
         {
