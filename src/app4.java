@@ -98,7 +98,7 @@ public class app4
         while(str2 == null && str1 != null)
         {
             pw.println(str1);
-            str1 = br2.readLine();
+            str1 = br1.readLine();
         }
         pw.close();
     }
@@ -133,74 +133,7 @@ public class app4
         }
         pw.close();
     }
-    /*public static void merge(String filename) throws FileNotFoundException, IOException
-    {
-        sortChunks(filename);
-        int i = 1;
-        int j = i + 1;
-        int previous = 0;
-        for(int k = 1; k < tracker; k += 2){
-        BufferedReader br1 = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream("merge"+k+".txt"))));
-        BufferedReader br2 = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream("merge"+(k+1)+".txt"))));
-        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("merge"+i+".txt")));
-        String str1 = br1.readLine();
-        String str2 = br2.readLine();
-        while(str1 != null && str2 != null)
-        {
-            if(Integer.parseInt(str1) < Integer.parseInt(str2)){
-            pw.println(str1);
-            str1 = br1.readLine();
-            }
-            else
-            {
-                pw.println(str2);
-                str2 = br2.readLine();
-            }
-        }
-        if(str1 == null && str2 != null)
-        {
-            pw.println(str2);
-        }
-        if(str2 == null && str1 != null)
-        {
-            pw.println(str1);
-        }
-        pw.close();
-        i++;
-        }
-        for(int k = 1; k < i; k += 2){
-            if(i <= 2){
-                File f = new File("merge1.txt");f.renameTo(new File("final.txt"));
-            }else{
-        BufferedReader br1 = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream("merge"+k+".txt"))));
-        BufferedReader br2 = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream("merge"+(k+1)+".txt"))));
-        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("final.txt")));
-        String str1 = br1.readLine();
-        String str2 = br2.readLine();
-        while(str1 != null && str2 != null)
-        {
-            if(Integer.parseInt(str1) < Integer.parseInt(str2)){
-            pw.println(str1);
-            str1 = br1.readLine();
-            }
-            else
-            {
-                pw.println(str2);
-                str2 = br2.readLine();
-            }
-        }
-        if(str1 == null && str2 != null)
-        {
-            pw.println(str2);
-        }
-        if(str2 == null && str1 != null)
-        {
-            pw.println(str1);
-        }
-        pw.close();
-        }
-        }
-    }*/
+    
     public static void merge(String File) throws FileNotFoundException, IOException
     {
         sortChunks(File);
@@ -212,8 +145,16 @@ public class app4
         //mix("merge5.txt","merge6.txt","merge7.txt");
         for(int i = 1; i < tracker; i+=2)
         {
+            File f = new File("merge"+(i+1)+".txt");
+            if(f.exists()){
             mix("merge"+i+".txt", "merge"+(i+1)+".txt", "merge"+tracker+".txt");
             tracker++;
+            }
+            else
+            {
+                System.out.println("Finished Sorting. File Name is merge"+i+".txt");
+                System.exit(0);
+            }
         }
     }
     public static void main(String...args) throws FileNotFoundException, IOException
