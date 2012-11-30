@@ -42,6 +42,7 @@ public class app4
             file.createNewFile();
             tracker++;
         }
+        br.close();
     }
     public static void sortChunks(String filename) throws FileNotFoundException, IOException
     {
@@ -101,48 +102,13 @@ public class app4
             str1 = br1.readLine();
         }
         pw.close();
+        br1.close();
+        br2.close();
     }
-    public static void mix(String File1, String File2) throws FileNotFoundException, IOException
-    {
-        BufferedReader br1 = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(File1))));
-        BufferedReader br2 = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(File2))));
-        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("merge"+tracker+".txt")));
-        String str1 = br1.readLine();
-        String str2 = br2.readLine();
-        while(str1 != null && str2 != null)
-        {
-            if(Integer.parseInt(str1) < Integer.parseInt(str2)){
-            pw.println(str1);
-            str1 = br1.readLine();
-            }
-            else
-            {
-                pw.println(str2);
-                str2 = br2.readLine();
-            }
-        }
-        while(str1 == null && str2 != null)
-        {
-            pw.println(str2);
-            str2 = br2.readLine();
-        }
-        while(str2 == null && str1 != null)
-        {
-            pw.println(str1);
-            str1 = br2.readLine();
-        }
-        pw.close();
-    }
-    
     public static void merge(String File) throws FileNotFoundException, IOException
     {
         sortChunks(File);
-        //int temp = tracker;
         tracker++;
-        //tracker = 1;
-        //mix("merge1.txt", "merge2.txt","merge5.txt");
-        //mix("merge3.txt","merge4.txt","merge6.txt");
-        //mix("merge5.txt","merge6.txt","merge7.txt");
         for(int i = 1; i < tracker; i+=2)
         {
             File f = new File("merge"+(i+1)+".txt");
@@ -153,6 +119,10 @@ public class app4
             else
             {
                 System.out.println("Finished Sorting. File Name is merge"+i+".txt");
+                for(int j = i - 1; j > 0; j--)
+                {
+                    new File("merge"+j+".txt").delete();
+                }
                 System.exit(0);
             }
         }
