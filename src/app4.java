@@ -13,7 +13,12 @@ public class app4
     {
        int i = 1;
        tracker = 1;
+       try
+       {
+           FileInputStream thenumbers =  new FileInputStream(filename);
+       
        BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(filename))));
+      
        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("merge"+i+".txt", true)));
        String str;
        int j = 0;
@@ -62,6 +67,12 @@ public class app4
             tracker++;
         }
         br.close();
+       }
+       catch(FileNotFoundException e)
+       {
+           System.out.println("File Not Found");
+           System.exit(0);
+       }
     }
      public static void mix(String File1, String File2, String out) throws FileNotFoundException, IOException
     {
