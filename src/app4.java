@@ -103,7 +103,7 @@ public class app4 {
                 }
             } else {
                 long endTime = System.currentTimeMillis();
-                System.out.println("It took " + i + " passes to sort this data and was sorted in " + ((endTime-startTime)/1000) + " seconds.");
+                System.out.println("It took " + i + " passes to sort this data and was sorted in " + ((endTime-startTime)/1000.0) + " seconds.");
                 System.out.println("Finished Sorting. File Name is merge" + i + ".txt");
                 System.exit(0);
             }
@@ -122,7 +122,7 @@ public class app4 {
             }
             else
             {
-                System.out.println("Error, file not found. Please try again");
+                System.out.println("Error, file not found. Please try again.");
             }
         }
     }
